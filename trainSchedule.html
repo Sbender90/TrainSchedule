@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<title>Train Schedule</title>
+</head>
+<body>
+<div class="container">
+	<div class="jumbotron">
+  <h1>Train Schedule</h1>
+  <p>On time every time</p>
+</div>
+  <!-- Adding the trains here need to make a row with (Train Name, Destination, Frequency(min), Next Arrival, Minutes Away ). 
+    
+    	append the input fields to the same column as the top field? -->
+<div class="container">
+	  <div class="panel panel-info">
+	  <div class="panel-heading">
+	    <h3 class="panel-title">Currently Running Trains</h3>
+	  </div>
+	  <div class="panel-body">
+	    Panel content
+	  </div>
+	</div>
+</div>
+
+<div class="container">
+	  <div class="panel panel-info">
+	  <div class="panel-heading">
+	    <h3 class="panel-title">Currently Running Trains</h3>
+	  </div>
+	  	<div class="panel-body">
+	  	   <form>
+      			<div class="form-group">
+      			  <label for="bidder-name">Train Name</label>
+      			  <input class="form-control" id="bidder-name" type="text">
+      			</div>
+      			<div class="form-group">
+      			  <label for="bidder-price">Destination</label>
+      			  <input class="form-control" id="bidder-price" type="number">
+      			</div>
+      			<div class="form-group">
+      			  <label for="bidder-price">First Train Time(HH;mm - military time)</label>
+      			  <input class="form-control" id="bidder-price" type="number">
+      			</div>
+      			<div class="form-group">
+      			  <label for="bidder-price">Frequency(min)</label>
+      			  <input class="form-control" id="bidder-price" type="number">
+      			</div>
+      			<button class="btn btn-primary" id="submit-bid" type="submit">Submit</button>
+      	   </form>
+	  	</div>
+	</div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+</body>
+</html>
