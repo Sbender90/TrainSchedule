@@ -69,8 +69,30 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
   var minTillTd = freqTd - timeRemaining;
   console.log("minutes till: " + minTillTd);
   var nextArrivalTd = moment().add(minTillTd, "minutes");
+  /*
   
-  
+  var currentTime = moment();
+    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+
+    // Difference between the times
+    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    console.log("DIFFERENCE IN TIME: " + diffTime);
+
+    // Time apart (remainder)
+    var tRemainder = diffTime % tFrequency;
+    console.log(tRemainder);
+
+    // Minute Until Train
+    var tMinutesTillTrain = tFrequency - tRemainder;
+    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+
+    // Next Train
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+
+
+  */
+
   tr.append(nameTd);
   tr.append(destinationTd);
   tr.append(freqTd);
