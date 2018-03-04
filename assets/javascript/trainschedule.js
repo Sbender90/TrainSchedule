@@ -57,33 +57,35 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
   var timeTd = $("<td>").text(snapshot.val().inputTime);
   var freqTd = $("<td>").text(snapshot.val().inputFrequency);
  
-  console.log(timeTd);
+  // console.log(timeTd);
   
-  var inputConverted = moment(timeTd, "HH:mm").format("hh:mm");
-  console.log("inputConverted: " + inputConverted);
+  // var inputConverted = moment(currentTime).format("LT");
+  // console.log("inputConverted: " + inputConverted);
 
-  var diffTime = moment().diff(moment(inputTime), "minutes");
-  console.log("Time Difference: " + diffTime);
-  var timeRemaining = diffTime % freqTd;
+  // var diffTime = moment().diff(moment(inputTime), "minutes");
+  // console.log("Time Difference: " + diffTime);
+  // var timeRemaining = diffTime % freqTd;
 
-  var minTillTd = freqTd - timeRemaining;
-  console.log("minutes till: " + minTillTd);
-  var nextArrivalTd = moment().add(minTillTd, "minutes");
-  /*
+  // var minTillTd = freqTd - timeRemaining;
+  // console.log("minutes till: " + minTillTd);
+  // var nextArrivalTd = moment().add(minTillTd, "minutes");
+
+  
+  
   
   var currentTime = moment();
     console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
 
     // Difference between the times
-    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    var diffTime = moment().diff(moment(timeTd), "minutes");
     console.log("DIFFERENCE IN TIME: " + diffTime);
 
     // Time apart (remainder)
-    var tRemainder = diffTime % tFrequency;
+    var tRemainder = diffTime % freqTd;
     console.log(tRemainder);
 
     // Minute Until Train
-    var tMinutesTillTrain = tFrequency - tRemainder;
+    var tMinutesTillTrain = freqTd - tRemainder;
     console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
 
     // Next Train
@@ -91,14 +93,14 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
     console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 
 
-  */
+  
 
   tr.append(nameTd);
   tr.append(destinationTd);
   tr.append(freqTd);
-  tr.append(nextArrivalTd);
-  //use this to somehow calculate the time till nexst train
-   tr.append(nextArrivalTd);
+  tr.append(nextTrain);
+  tr.append(tMinutesTillTrain);
+  
   
 
   $("#trainTable").append(tr);
