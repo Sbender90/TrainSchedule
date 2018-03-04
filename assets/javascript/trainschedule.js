@@ -70,7 +70,7 @@ database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", funct
   // console.log("minutes till: " + minTillTd);
   // var nextArrivalTd = moment().add(minTillTd, "minutes");
 
-  
+  // trying these two methods one above one below can't get it to work with currentTime
   
   
   var currentTime = moment();
