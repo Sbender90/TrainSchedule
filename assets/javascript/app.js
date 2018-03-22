@@ -1,110 +1,60 @@
 $(function() {
 
-var config = {
-    apiKey: "AIzaSyDCpdF9ieNvE4_6NbRNIaTxPJkb0deVxIs",
-    authDomain: "train-scheduler-1beb4.firebaseapp.com",
-    databaseURL: "https://train-scheduler-1beb4.firebaseio.com",
-    projectId: "train-scheduler-1beb4",
-    storageBucket: "",
-    messagingSenderId: "177098785101"
+  var config = {
+    apiKey: "AIzaSyC-3csDvbmP0HUN4DrrTCUcnCklW-OHXAk",
+    authDomain: "train-scheduler-2-d9a8a.firebaseapp.com",
+    databaseURL: "https://train-scheduler-2-d9a8a.firebaseio.com",
+    projectId: "train-scheduler-2-d9a8a",
+    storageBucket: "train-scheduler-2-d9a8a.appspot.com",
+    messagingSenderId: "1011672945295"
+    
   };
   firebase.initializeApp(config);
 
-  var database = firebase.database();
+  var trainData = firebase.database();
 
-  var inputName = "";
-  var inputDestination = "";
-  var inputTime = "";
-  var inputFrequency = "";
-  
-$("#train-submit").on("click", function(event) {
-  event.preventDefault();
+  $("#train-submit").on("click", function() {
+    var trainName = $("#train-name").val().trim();
+    var destination = $("#train-destination").val().trim();
+    var firstTrain = moment($("#train-depart").val().trim(),"HH:mm").subtract(10, "years").format("X");
+    var frequecny = $("#train-freq").val().trim();
 
-  inputName = $("#train-name").val().trim();
-  inputDestination = $("#train-destination").val().trim();
-  inputTime = $("#train-depart").val().trim();
-  inputFrequency = $("#train-freq").val().trim();
+    var newTrain = {
+      name: trainName,
+      destination: destination,
+      firstTrain: firstTrain,
+      frequecny: frequecny
+    }
 
-  database.ref().push({
-    inputName: inputName,
-    inputDestination: inputDestination,
-    inputTime: inputTime,
-    inputFrequency: inputFrequency,
-    dateAdded: firebase.database.ServerValue.TIMESTAMP
+    trainData.ref().push(newTrain);
 
-  });
+    alert("Train Added!");
 
-  $("#train-name").val("");
-  $("#train-destination").val("");
-  $("#train-depart").val("");
-  $("#train-freq").val("");
+    $("#train-name").val("");
+    $("#train-destination").val("");
+    $("#train-depart").val("");
+    $("#train-freq").val("");
+
+    return false;
+  })
+
+  trainData.ref().on("child_added",function(snapshot) {
+    var name = snapshot.val().name;
+    var destination = snapshot.val().destination;
+    var frequecny = snapshot.val().frequecny;
+    var firstTrain = snapshot.val().firstTrain;
+
+    var remainder = moment().diff(moment.unix(firstTrain),"minutes")%frequecny;
+    var minutes = frequecny - remainder;
+    var arrival = moment().add(minutes, "m").format("hh:mm A");
+
+    console.log(remainder);
+    console.log(minutes);
+    console.log(arrival);
+    $("#trainTable > tbody").append("<tr><td>"+name+"</td><td>"+destination+"</td><td>"+frequecny+"</td><td>"+arrival+"</td><td>"+minutes+"</td></tr>");
+
+  })
+
 });
 
-  database.ref().on("child_added", function (childSnapshot) {
-    console.log(childSnapshot.val().inputName);
 
-  }, function(errorObject) {
-    console.log("Errors: " + errorObject.code);
-  });
-
-database.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", function(snapshot) {
-  var currentTime = moment().format("hh:mm");
-  console.log("current Time: " + currentTime);
-  
-  var tr = $("<tr>");
-  var nameTd = $("<td>").text(snapshot.val().inputName);
-  var destinationTd = $("<td>").text(snapshot.val().inputDestination);
-  var timeTd = $("<td>").text(snapshot.val().inputTime);
-  var freqTd = $("<td>").text(snapshot.val().inputFrequency);
- 
-  // console.log(timeTd);
-  
-  // var inputConverted = moment(currentTime).format("LT");
-  // console.log("inputConverted: " + inputConverted);
-
-  // var diffTime = moment().diff(moment(inputTime), "minutes");
-  // console.log("Time Difference: " + diffTime);
-  // var timeRemaining = diffTime % freqTd;
-
-  // var minTillTd = freqTd - timeRemaining;
-  // console.log("minutes till: " + minTillTd);
-  // var nextArrivalTd = moment().add(minTillTd, "minutes");
-
-  // trying these two methods one above one below can't get it to work with currentTime
-  
-  
-  var currentTime = moment();
-    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
-
-    // Difference between the times
-    var diffTime = moment().diff(moment(timeTd), "minutes");
-    console.log("DIFFERENCE IN TIME: " + diffTime);
-
-    // Time apart (remainder)
-    var tRemainder = diffTime % freqTd;
-    console.log(tRemainder);
-
-    // Minute Until Train
-    var tMinutesTillTrain = freqTd - tRemainder;
-    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
-
-    // Next Train
-    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
-
-
-  
-
-  tr.append(nameTd);
-  tr.append(destinationTd);
-  tr.append(freqTd);
-  tr.append(nextTrain);
-  tr.append(tMinutesTillTrain);
-  
-  
-
-  $("#trainTable").append(tr);
-  console.log(snapshot.val());
-})
-  //
-});
